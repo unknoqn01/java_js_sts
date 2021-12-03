@@ -4,31 +4,32 @@
 <%@ page import="java.sql.*" %>
 
 <%!
+// DB 접속 정보
 Connection conn = null;
 Statement stmt = null;
+// 현재 페이지가 수정 페이지이기 때문에 기존 정보가 필요함
 ResultSet rs = null;
 
+// DB 접속 정보
 String driver = "com.mysql.cj.jdbc.Driver";
 String url = "jdbc:mysql://localhost:3306/testdb?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC";
-String uid = "testuser";
-String upw = "bitc1234";
+String uid = "test";
+String upw = "1234";
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>게시판 만들기</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
-<style>
-	.jumbotron {
-		background-color: lightgray;
-	}
-</style>
+<link rel="stylesheet" href="./style/mystyle.css">
 
 <script>
+// 	수정 취소 시 이전페이지로 이동
 	window.addEventListener("DOMContentLoaded", function() {
 		var btnCancel = document.querySelector("#btn-cancel");
 		btnCancel.addEventListener("click", function(){
@@ -38,17 +39,14 @@ String upw = "bitc1234";
 </script>
 </head>
 <body>
-	<header class="container">
-		<div class="mt-4 p-5 rounded jumbotron">
-			<h1>게시판 글 수정 페이지</h1>
-		</div>
-	</header>
+	<%@ include file="header.jsp" %>
 	
-	<main class="container">
+	<main class="container main-footer-space">
 		<form class="mt-5" action="updateBoard_process.jsp" method="post">
 		<%
 		request.setCharacterEncoding("utf-8");
 		
+// 		기존의 정보를 로드하여 화면에 출력하기 위한 select 문
 		int num = Integer.parseInt(request.getParameter("num"));
 		String sql = "SELECT idx, title, contents, creator_id, hit_cnt ";
 		sql += "FROM t_board ";
@@ -68,6 +66,7 @@ String upw = "bitc1234";
 				String userId = rs.getString("creator_id");
 				int hitCnt = rs.getInt("hit_cnt");
 		%>
+<!-- 			selectBoard와 다른 점은 input 태그에 readonly 가 없기 때문에 글 수정이 가능함 -->
 			<div class="my-3">
 				<label for="idx">글번호 : </label>
 				<input type="text" class="form-control" id="idx" name="idx" readonly value="<%= idx %>">
@@ -113,11 +112,7 @@ String upw = "bitc1234";
 		</form>
 	</main>
 	
-	<footer class="container-fluid p-0">
-		<div class="mt-3 p-5 jumbotron text-center">
-			<p>made by bitc</p>
-		</div>
-	</footer>
+	<%@ include file="footer.jsp" %>
 </body>
 </html>
 

@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+.jumbotron {
+	background-color: lightgray;
+}
+
+.main-footer-space {
+	margin-bottom: 150px !important;
+}
