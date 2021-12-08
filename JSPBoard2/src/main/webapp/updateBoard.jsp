@@ -87,8 +87,6 @@ String upw = "1234";
 				<label for="contents">글내용 : </label>
 				<textarea rows="5" class="form-control" id="contents" name="contents"><%= contents %></textarea>
 			</div>
-			
-			
 			<div class="d-flex justify-content-between">
 				<div>
 					<a href="boardList.jsp" class="btn btn-secondary">목록</a>

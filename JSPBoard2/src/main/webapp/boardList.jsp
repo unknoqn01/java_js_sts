@@ -68,7 +68,6 @@
 			</thead>
 			<tbody>
 				<%
-			
 				String sql = "SELECT idx, title, creator_id, created_date, hit_cnt ";
 				sql += "FROM t_board ";
 				sql += "WHERE deleted_yn = 'N' ";
@@ -95,14 +94,12 @@
 // 					ResultSet 클래스의 next() 메서드를 실행 시 데이터가 있으면 true, 없으면 false를 출력
 					while (rs.next()) {
 // 						getInt, getString 메서드 사용 시 매개변수로 사용하는 문자열은 실제 DB의 컬럼명을 사용해야 함
-							int idx = rs.getInt("idx"); 
-							String title = rs.getString("title");
-							String creatorId = rs.getString("creator_id");
-							String createdDate = rs.getString("created_date");
-							int hitCnt = rs.getInt("hit_cnt");
+						int idx = rs.getInt("idx"); 
+						String title = rs.getString("title");
+						String creatorId = rs.getString("creator_id");
+						String createdDate = rs.getString("created_date");
+						int hitCnt = rs.getInt("hit_cnt");
 						
-						
-					
 						String item = "<tr>";
 						item += "<td>" + idx + "</td>";
 						item += "<td><a href='selectBoard.jsp?num=" + idx + "'>" + title + "</a></td>";
