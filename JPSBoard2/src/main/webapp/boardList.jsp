@@ -1,10 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
+<%@ page import="com.bitc.dto.BoardDto" %>
+<%@ page import="com.bitc.dto.BoardDao" %>
+<%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8" />
     <title>게시판 목록</title>
+    
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -27,42 +31,12 @@ pageEncoding="UTF-8"%>
       integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
       crossorigin="anonymous"
     ></script>
+
   </head>
   <body>
-    <header class="container-fluid px-0">
-      <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-        <a href="#" class="navbar-brand">JSP Board</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-targer="#mynavbar"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="mynavbar">
-          <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a href="#" class="nav-link active">메뉴 1</a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">메뉴 2</a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">메뉴 3</a>
-            </li>
-          </ul>
-        </div>
-        <div class="d-flex">
-          <form action="" class="d-flex">
-            <a href="login.jsp" class="btn btn-outline-primary">로그인</a>
-          </form>
-        </div>
-      </nav>
-      <div class="mt-4 p-5 bg-secondary rounded bg-opacity-50">
-        <h1 class="text-center">게시판 목록 페이지</h1>
-      </div>
-    </header>
+
+	<jsp:include page="header.jsp" flush="false"></jsp:include>
+    
     <main class="container">
       <section class="row">
         <article class="col-sm">
@@ -72,29 +46,38 @@ pageEncoding="UTF-8"%>
             >
               <colgroup>
                 <col width="10%" />
-                <col width="46%" />
+                <col width="50%" />
                 <col width="15%" />
                 <col width="15%" />
-                <col width="7%" />
-                <col width="7%" />
+                <col width="10%" />
               </colgroup>
               <thead>
-                <th>글번호</th>
-                <th>제목</th>
-                <th>글쓴이</th>
-                <th>등록시간</th>
-                <th>조회수</th>
-                <th>추천수</th>
+				<tr>
+	                <th>글번호</th>
+	                <th>제목</th>
+	                <th>글쓴이</th>
+	                <th>등록시간</th>
+	                <th>조회수</th>
+              	<tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td class="text-start">테스트 제목</td>
-                  <td>테스트 계정 01</td>
-                  <td>2021년 1월 1일</td>
-                  <td>0</td>
-                  <td>0</td>
-                </tr>
+				<%
+					BoardDao dao = new BoardDao();
+					ArrayList<BoardDto> boardList = dao.selectBoardList();
+
+					for (BoardDto item : boardList) {
+                        String data = "";
+                        data += "<tr>";
+                        data += "<td>" + item.getIdx() + "</td>";
+                        data += "<td class='text-start'><a class='text-decoration-none' href='boardSelect.jsp?idx=" + item.getIdx() + "'>" + item.getTitle() + "</a></td>";
+                        data += "<td>" + item.getCreatorId() + "</td>";
+                        data += "<td>" + item.getCreatedDate() + "</td>";
+                        data += "<td>" + item.getHitCnt() + "</td>";
+                        data += "</tr>";
+                        
+                        out.println(data);
+                     }
+				%>
               </tbody>
             </table>
           </div>
@@ -109,8 +92,7 @@ pageEncoding="UTF-8"%>
         </article>
       </section>
     </main>
-    <footer class="container-fluid text-center p-5">
-      <p class="lead text-muted">made by bitc</p>
-    </footer>
+
+	<%@ include file = "footer.jsp" %>
   </body>
 </html>

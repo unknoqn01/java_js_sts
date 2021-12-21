@@ -29,7 +29,9 @@
 		MemberDao dao = new MemberDao();
 		
 		int count = dao.idPwChck(userId, userPw);
-	
+		
+		out.print(count);
+		
 		if (count > 0) {
 	//	사용자 정보 불러오기
 			/* 세션(session) 저장 */		
@@ -39,11 +41,11 @@
 			session.setAttribute("userName", member.getUserName());		
 			session.setAttribute("userEmail", member.getUserEmail());		
 	
-			response.sendRedirect("boradList.jsp");
+			response.sendRedirect("boardList.jsp");
 		}
 		else {
 			/* login fail */		
-			response.sendRedirect("login.jsp");
+			//response.sendRedirect("login.jsp");
 		}
 	%>
 	
