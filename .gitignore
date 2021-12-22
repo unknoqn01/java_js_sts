@@ -5,3 +5,9 @@ Servers/
 *.class
 .classpath
 .project
+.gradle/
+gradle/
+*.gradle
+gradlew
+*.bat
+*.md
