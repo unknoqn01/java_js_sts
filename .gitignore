@@ -7,7 +7,7 @@ Servers/
 .project
 .gradle/
 gradle/
-*.gradle
 gradlew
-*.bat
-*.md
+gradlew.bat
+HELP.md
+settings.gradle
