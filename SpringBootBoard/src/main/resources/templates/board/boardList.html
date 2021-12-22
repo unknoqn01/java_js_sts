@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang = "ko" xmlns:th = "http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>스프링부트 게시판</title>
+</head>
+<body>
+	<table border ="1">
+		<thead>
+			<tr>
+				<th>글 번호</th>
+				<th>제목</th>
+				<th>글쓴이</th>
+				<th>등록시간</th>
+				<th>조회수</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:if="${#lists.size(boardList)} > 0" th:each="item : ${boardList}">
+				<td th:text="${item.idx}"></td>
+				<td th:text="${item.title}"></td>
+				<td th:text="${item.creatorId}"></td>
+				<td th:text="${item.createdDate}"></td>
+				<td th:text="${item.hitCnt}"></td>
+			</tr>
+			<tr th:unless="${#lists.size(boardList)} > 0">
+				<td colspan = "5">조회된 결과가 없습니다.</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>
