@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+<!-- namespace : mybatis에 의해서 매핑된 mapper 파일을 지정-->
+<!-- 해당 xml 파일과 mapper 파일이 연동됨-->
+<!-- mapper interface 파일의 구현체가 된 xml 임-->
 <mapper namespace="com.bitc.board.mapper.BoardMapper">
+	<!-- id : mapper 파일의 메서드명, override 효과-->
+	<!-- resultType : 해당 SQL문 실행 후 반환할 결과값의 타입-->
+	<!-- parameterType : 해당 SQL문이 실해 시 필요한 데이터의 타입 -->
 	<select id="selectBoardList" resultType="com.bitc.board.dto.BoardDto">
 		<![CDATA[ 
 			SELECT

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thleleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div id="div01">
+		<h3>${} 형태로 변수 표현하기</h3>
+		<div>
+			<p th:text="${member.userId}">asdf</p>		
+			<p th:text="${member.userPw}">bitc</p>		
+			<p th:text="${member.userEmail}">asdf@bitc.co.kr</p>		
+			<p th:text="${member.userName}">asdf</p>		
+		</div>
+		<hr>
+		
+		<h3>#{} 형태로 변수 표현하기</h3>
+		<div th:object="${member}">
+			<p th:text = "*{userId}">asdf</p>	
+			<p th:text = "*{userPw}">asdf</p>	
+			<p th:text = "*{userEmail}">asdf</p>	
+			<p th:text = "*{userName}">asdf</p>	
+		</div>
+		<br>
+		<div>
+			<p th:text = "*{member.userId}">asdf</p>	
+			<p th:text = "*{member.userPw}">asdf</p>	
+			<p th:text = "*{member.userEmail}">asdf</p>	
+			<p th:text = "*{member.userName}">asdf</p>	
+		</div>
+		
+		<hr>
+		
+		<h3>#{...} 사용하기</h3>
+		<div>
+			<P th:text="#{home.welcome}">주소</P>
+			<P th:text="#{tel}">전화번호</P>
+		</div>
+		<hr>
+		<h3>링크 표현 사용하기 @{...}</h3>
+		<div>
+			<img src="/images/photo-2.jpg" width="300" height="400">
+			<img src="/images/photo-2.jpg'" th:src="@{/images/photo-2.jpg}" width="300" height="400">
+			<p th:text="${iamge}"></p>
+		</div>
+		<hr>
+		<h3>문자열 사용하기</h3>
+		<div>
+			<p th:text="'문자열 출력'">기본 문자열</p>		
+			<p th:text="'문자열 출력 '+${image}">기본 문자열</p>	
+			<p th:text="'문자열 출력 '+${image}+'이어진 문자열'">기본 문자열</p>	
+			<p th:text="|문자열 출력 ${image}|">기본 문자열</p>	
+			<p th:text="|문자열 출력 ${image} 이어진 문자열|">기본 문자열</p>	
+		</div>
+		<h3>숫자, Boolean 사용하기</h3>
+		<div>
+			<p th:text="1234"></p>
+			<p th:text="1234 + 1234"></p>
+			<p th:text="true"></p>
+			<p th:text="(${image} == 'pegsu01.jpg') == true"></p>
+		</div>
+		<hr>
+		<h3>조건문 사용</h3>
+		<div th:if="${image} == 'photo-2.jpg'">
+			<p>${image}의 이름은 : <span th:text=${image}></span></p>
+		</div>
+		<div th:unless="${image} == 'photo-2.jpg'">
+			<p>${image}의 이름은 : <span th:text="'pengsu01.jpg'"></span></p>
+		</div>
+		<h3>유틸 객체 사용하기</h3>
+		<div>
+			<p th:text="${#lists.size(memberList)}"></p>
+			<p th:text="${#lists.isEmpty(memberList)}"></p>
+	<!--	<p th:text="${#lists.sort(memberList)}"></p>
+			<p th:text="${#lists.contains(memberList, 'tester02')}"></p>
+		-->
+		</div>
+	</div>
+</body>
+</html>
