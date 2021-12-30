@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h3>thymeleaf 테스트 페이지</h3>
+	
+	<div>
+		<p>변수사용</p>
+		<p th:text="${value1}">기본 문자열</p>
+		<p th:text="${value2}">기본 문자열</p>
+		<p th:text="#{msg.name}">message.properties</p>
+		<p th:text="#{msg.tel}"></p>
+		<p th:text="#{msg.welcome}">msg.properties</p>
+		
+		<h3>고정값 속성 사용</h3>
+		<div>
+			<input type = "text"><br>
+			<input type = "text" disabled th:disabled="${active}"><br>
+		</div>
+		<hr>
+		<h3>반복문 사용</h3>
+		<div>
+			<table border="1">
+				<tr>
+					<th>ID</th>
+					<th>Password</th>
+					<th>이름</th>
+					<th>이메일</th>
+				</tr>
+				<tr th:each="item : ${members}">
+					<td th:text="${item.userId}"></td>
+					<td th:text="${item.userPw}"></td>
+					<td th:text="${item.userName}"></td>
+					<td th:text="${item.userEmail}"></td>
+				</tr>
+			</table>	
+				<div th:each="member : ${members}">
+					<td th:text="${member.userId}"></td>
+					<td th:text="${member.userPw}"></td>
+					<td th:text="${member.userName}"></td>
+					<td th:text="${member.userEmail}"></td>
+				</div>	
+				<div th:each="item, itemStat : ${members}">
+					<p th:text="${'index : ' + itemStat.index}">
+					<p th:text="${'count : ' + itemStat.count}">
+					<p th:text="${'size : ' + itemStat.size}">
+					<p th:text="${'current : ' + itemStat.current}">
+					<p th:text="${'first : ' + itemStat.first}">
+					<p th:text="${'last : ' + itemStat.last}">
+					<p th:text="${'even : ' + itemStat.even}">
+					<p th:text="${'odd : ' + itemStat.odd}">
+				
+				</div>
+		</div>
+	</div>
+</body>
+</html>

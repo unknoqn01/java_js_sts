@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Insert title here</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      window.addEventListener("DOMContentLoaded", function () {
+        var btnList = document.querySelector("#btn-list");
+        btnList.addEventListener("click", function () {
+          location.href = "/addr/list.do";
+        });
+
+        var btnEdit = document.querySelector("#btn-edit");
+        btnEdit.addEventListener("click", function () {
+          var frm = document.frm;
+          frm.method = "post";
+          frm.action = "/addr/update.do";
+          frm.submit();
+        });
+
+        var btnDel = document.querySelector("#btn-del");
+        btnDel.addEventListener("click", function () {
+          var frm = document.frm;
+          frm.method = "post";
+          frm.action = "/addr/delete.do";
+          frm.submit();
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <header th:include="layout/layoutHeader :: header"></header>
+
+    <main class="container mt-5">
+      <div class="row">
+        <div class="col-sm-8 mx-auto p-3 border rounded">
+          <form name="frm" method="post">
+            <div class="card">
+              <div class="card-img-top">
+                <img src="/img/cat.jpg" class="img-thumbnail" />
+              </div>
+              <div class="card-text">
+                <div class="my-3">
+                  <label for="user-id">ID : </label>
+                  <input
+                    type="text"
+                    class="form-control-plaintext"
+                    id="user-id"
+                    name="userId"
+                    th:value="${addr.userId}"
+                  />
+                </div>
+                <div class="my-3">
+                  <label for="user-name">이름 : </label>
+                  <input
+                    type="text"
+                    class="form-control-plaintext"
+                    id="user-name"
+                    name="userName"
+                    th:value="${addr.userName}"
+                  />
+                </div>
+                <div class="my-3">
+                  <label for="user-email">email : </label>
+                  <input
+                    type="text"
+                    class="form-control-plaintext"
+                    id="user-email"
+                    name="userEmail"
+                    th:value="${addr.userEmail}"
+                  />
+                </div>
+                <div class="my-3">
+                  <label for="user-phone">전화번호 : </label>
+                  <input
+                    type="text"
+                    class="form-control-plaintext"
+                    id="user-phone"
+                    name="userPhone"
+                    th:value="${addr.userPhone}"
+                  />
+                </div>
+                <div class="my-3">
+                  <label for="user-gender">성별 : </label>
+                  <input
+                    type="text"
+                    class="form-control-plaintext"
+                    id="user-gender"
+                    name="userGender"
+                    th:value="${addr.userGender}"
+                  />
+                </div>
+                <div class="my-3">
+                  <label for="user-addr">주소 : </label>
+                  <textarea
+                    rows="5"
+                    class="form-control-plaintext"
+                    id="user-addr"
+                    name="userAddr"
+                    th:text="${addr.userAddr}"
+                  ></textarea>
+                </div>
+                <div>
+                  <input type="hidden" name="seq" th:value="${addr.seq}" />
+                </div>
+              </div>
+            </div>
+            <div class="card-img-bottom my-3">
+              <button
+                type="button"
+                class="btn btn-secondary float-start"
+                id="btn-list"
+              >
+                목록으로
+              </button>
+              <button
+                type="button"
+                class="btn btn-danger float-end ms-3"
+                id="btn-del"
+              >
+                삭제하기
+              </button>
+              <button
+                type="button"
+                class="btn btn-warning float-end"
+                id="btn-edit"
+              >
+                수정하기
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <footer th:replace="layout/layoutFooter :: footer"></footer>
+  </body>
+</html>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bitc.csy.mapper.AddrMapper">
+	<select id="selectAddrList" resultType="com.bitc.csy.dto.AddrDto">
+		<![CDATA[
+			SELECT
+				seq, user_name, user_email, user_phone
+			FROM
+				t_member
+			WHERE
+				deleted_yn = 'N'
+			ORDER BY
+				seq DESC
+		]]>
+	</select>
+	
+	<select id="selectAddrDetail" parameterType="int" resultType="com.bitc.csy.dto.AddrDto">
+		<![CDATA[
+			SELECT
+				seq, user_id, user_pw, user_name, user_email, user_phone, user_addr, user_gender
+			FROM
+				t_member
+			WHERE
+				seq = #{seq}
+			AND
+				deleted_yn = 'N'
+		]]>
+	</select>
+	
+	<update id="deleteAddr" parameterType="int">
+		<![CDATA[
+			UPDATE
+				t_member
+			SET
+				deleted_yn = 'Y'
+			WHERE
+				seq = #{seq}
+		]]>
+	</update>
+	
+	<update id="updateAddr" parameterType= "com.bitc.csy.dto.AddrDto">
+		<![CDATA[
+			update 
+				t_member 
+			set 
+				user_id = #{userId}, 
+				user_name = #{userName}, 
+				user_email = #{userEmail},
+				user_phone = #{userPhone}, 
+				user_addr = #{userAddr}, 
+				user_gender = #{userGender}
+			where
+				seq = #{seq}
+		]]>
+	</update>	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

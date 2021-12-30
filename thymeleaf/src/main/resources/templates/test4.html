@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div th:if="${#lists.size(memberList) > 0}" th:each="item : ${memberList}">
+		<p th:text="${item.userId}">
+		<p th:text="${item.userPw}">
+		<p th:text="${item.userName}">
+		<p th:text="${item.userEmail}">
+		<p>내용이 있습니다.</p>
+		<hr>
+	</div>
+	<div th:unless="${#lists.size(memberList) > 0}">
+		<p>내용이 없습니다.</p>
+	</div>
+</body>
+</html>

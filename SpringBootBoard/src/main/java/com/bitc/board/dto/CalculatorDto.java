@@ -5,8 +5,7 @@ import lombok.Data;
 @Data
 public class CalculatorDto {
 
-		private int num1;
-		private int num2;
-		private int result;
-		
+	private int num1;
+	private int num2;
+	private int result;
 }
