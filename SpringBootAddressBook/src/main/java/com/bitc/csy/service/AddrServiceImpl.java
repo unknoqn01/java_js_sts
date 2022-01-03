@@ -31,9 +31,15 @@ public class AddrServiceImpl implements AddrService {
 		addrMapper.deleteAddr(seq);
 		
 	}
+	
 	@Override
 	public void updateAddr(AddrDto dto) throws Exception {
 		addrMapper.updateAddr(dto);
+	}
+	
+	@Override
+	public void insertAddr(AddrDto dto) throws Exception {
+		addrMapper.insertAddr(dto);
 	}
 }
 

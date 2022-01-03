@@ -8,7 +8,11 @@
 	<main class="container my-5">
 		<div class="row">
 			<div class="col-sm mx-auto">
-				<form action="/board/insertBoard.do" th:action="@{/board/insertBoard.do}" method="post">
+				<!-- enctype : 서버로 데이터 전송 시 전송되는 데이터의 유형을 표시하는 속성 -->
+				<!-- 기본값 application/x-www-form-urlencoded -->
+				<!-- enctype="multipart/form-data" 입력 시 문자 데이터와 바이너리 데이터가 함께 서버로 전송됨 -->
+				<!-- 파일 전송 시 반드시 multipart/form-data가 필요함 -->
+				<form action="/board/insertBoard.do" th:action="@{/board/insertBoard.do}" method="post" enctype="multipart/form-data">
 					<div class="my-3">
 						<label for="title" class="form-label">제목 : </label>
 						<input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력하세요">
@@ -20,6 +24,11 @@
 					<div class="my-3">
 						<label for="contents" class="form-label">내용 : </label>
 						<textarea rows="5" class="form-control" id="contents" name="contents"></textarea>
+					</div>
+					<div class="my-3">
+						<label for="files">파일 : </label>
+						<!-- input 태그의 multiple 속성은 파일의 다중 선택 기능 -->
+						<input type="file" class="form-control" id="files" name="files" multiple>
 					</div>
 					<div class="my-3 clearFix">
 						<button type="button" class="btn btn-secondary float-start" id="btn-list">목록으로</button>

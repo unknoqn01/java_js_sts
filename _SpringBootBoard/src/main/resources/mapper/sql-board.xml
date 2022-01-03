@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Mybatis에서 매핑된 sql 이라는 것을 알려주기 위한 문장 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace : mybatis에 의해서 현재 xml 파일과 1:1로 연결된 Mapper 파일을 지정 -->
+<!-- 해당 xml 파일과 mapper 파일이 연동됨 -->
+<!-- mapper interface 파일의 구현체가 된 xml 임 -->
+<mapper namespace="com.bitc.board.mapper.BoardMapper">
+	<!-- id : mapper 파일의 메서드명, override 효과 -->
+	<!-- resultType : 해당 SQL문 실행 후 반환할 결과값의 타입 -->
+	<!-- parameterType : 해당 SQL문이 실행 시 필요한 데이터의 타입 -->
+	<select id="selectBoardList" resultType="com.bitc.board.dto.BoardDto">
+		<![CDATA[ 
+			SELECT
+				idx, title, creator_id, hit_cnt,
+				DATE_FORMAT(created_date, '%Y.%m.%d %H:%i:%s') AS created_date
+			FROM
+				t_board
+			WHERE
+				deleted_yn = 'N'
+			ORDER BY
+				idx DESC
+		]]>
+	</select>
+	
+	<!-- mybatis는 기본적으로 PreparedStatement 를 사용하여 SQL쿼리를 실행함 -->
+	<!-- mybatis에선 변수 입력 부분을 #{..} 으로 표기함 -->
+	<!-- #{..} 에 들어갈 변수는 Dto 클래스의 멤버 변수를 사용함 -->
+	<insert id="insertBoard" parameterType="com.bitc.board.dto.BoardDto">
+		<![CDATA[
+			INSERT INTO
+				t_board (title, contents, creator_id, created_date)
+			VALUES
+				(#{title}, #{contents}, #{creatorId}, NOW())
+		]]>
+	</insert>
+	
+	<select id="selectBoardDetail" parameterType="int" resultType="com.bitc.board.dto.BoardDto">
+		<![CDATA[
+			SELECT
+				idx, title, contents, creator_id, created_date, update_id, updated_date, hit_cnt
+			FROM
+				t_board
+			WHERE
+				idx = #{idx}
+			AND
+				deleted_yn = 'N'
+		]]>
+	</select>
+	
+	<update id="deleteBoard" parameterType="int">
+		<![CDATA[
+			UPDATE
+				t_board
+			SET
+				deleted_yn = 'Y'
+			WHERE
+				idx = #{idx}
+		]]>
+	</update>
+	
+	<!--<delete id="deleteBoard" parameterType="int">
+		<![CDATA[
+			DELETE FROM
+				t_board
+			WHERE
+				idx = #{idx}
+		]]>
+	</delete>-->
+	
+	<update id="updateBoard" parameterType="com.bitc.board.dto.BoardDto">
+		<![CDATA[
+			UPDATE
+				t_board
+			SET
+				title = #{title}, contents = #{contents}, update_id = #{creatorId}, updated_date = NOW()
+			WHERE
+				idx = #{idx}
+			AND
+				deleted_yn = 'N'
+		]]>
+	</update>
+	
+	<update id="updateHitCnt" parameterType="int">
+		<![CDATA[
+			UPDATE
+				t_board
+			SET
+				hit_cnt = hit_cnt + 1
+			WHERE
+				idx = #{idx}
+			AND
+				deleted_yn = 'N'
+		]]>
+	</update>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

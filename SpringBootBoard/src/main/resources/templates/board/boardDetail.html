@@ -49,6 +49,8 @@
 				</div>
 				<div class="col-sm-4">
 					<input type="text" class="form-control" name="hitCnt" readonly value="0" th:value="${board.hitCnt}">
+				<!-- 컨트롤러에서 전송된 데이터 전체를 보고 싶을 경우 해당 데이터를 직접 찍어서 확인 -->
+				<!-- <p th:text="${board}"></p> -->
 				</div>
 			</div>
 			<div class="row my-3">
@@ -56,9 +58,29 @@
 					<textarea rows="10" class="form-control" name="contents" th:text="${board.contents}"></textarea>
 				</div>
 			</div>
-			<div>
-				<input type="hidden" name="idx" value="1" th:value="${board.idx}">
+			<div class="row my-3">
+				<div class="col-sm">
+					<a th:each="file : ${board.fileList}" th:href="@{/board/downloadBoardFile.do(fileIdx=${file.fileIdx},boardIdx=${file.boardIdx})}" th:text="|${file.originalFileName}(${file.fileSize} kb) |"></a>
+				</div>
 			</div>
+				<div th:each="files : ${board.fileList}">
+					<img th:src="@{'/'+${files.storedFilePath}}">
+
+				<!-- 	<p th:text="'/'+${files.storedFilePath}">
+					<p th:text="${files.storedFilePath}">
+				-->
+				</div>	
+
+				
+				<div class="row">
+					<img th:src="@{/image/cat.jpg}" width="150px" height="150px" class="col-4 my-1" >
+						<img th:src="@{/webImage/cat.jpg}" width="150px" height="150px" class="col-4 my-1">
+				</div>
+			
+			
+				<div>
+					<input type="hidden" name="idx" value="1" th:value="${board.idx}">
+				</div>
 			<div class="my-3 clearfix">
 				<button type="button" id="btn-list" class="btn btn-secondary float-start">목록</button>
 				<button type="button" id="btn-edit" class="btn btn-success float-end">수정</button>

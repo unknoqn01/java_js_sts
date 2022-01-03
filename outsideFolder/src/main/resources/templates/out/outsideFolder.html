@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h3>사용하기</h3>
+	<div>
+		<!-- 스프링부트에서 사용자 웹 화면에 표시할 모든 리소스는 src/main/resources 폴더를 기준으로 함 -->
+		<!-- 여기서 css, 이미지, 영상파일 같은 컨텐츠 파일들은 모두 static 폴더를 root 폴더로 하고 있음 -->
+		<!--  서버에서는 보통 업로드된 파일을 해당 서버의 특정 위치를 지정하여 저장하는데 그 장소가 웹서버의 디렉토리와 다를 경우가 발생함 -->
+		<!-- 사용하던 서버프로그램을 물리적으로 다른 서버에 이전하는 경우 지정한 위치가 달라지는 경우도 발생함 -->
+		<!-- 스프링부트에서는 설정 통하여 외부 디렉토리를 프로젝트 내부 디렉토리인 것처럼 사용할 수 있도록 함 -->
+		<img src="/images/springbootimg.png"><br>
+		<img src="/images/springbootimg.png" th:src="@{/images/springbootimg.png}"><br>
+		<!-- 스프링부트 프로젝트는 기본적으로 웹 서버에서 동작하며 모든 웹프로그램은 웹 서버의 root 폴더 밖의 경로를 이해할 수 없음 -->		
+		<img src="C:/java404/img/springbootimg.png"><br>	
+		<img src="C:/java404/img/springbootimg.png" th:src="@{/img/springbootimg.png}"><br>	
+	</div>
+</body>
+</html>

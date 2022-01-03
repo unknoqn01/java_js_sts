@@ -54,7 +54,18 @@ public class AddressBookController {
 		return "redirect:/addr/list.do";
 	}
 	
-//	문제 1) 수정 기능을 구현하세요
+	
+	@RequestMapping("/addr/addrWrite.do")
+	public String insertAddr(AddrDto dto) throws Exception {
+		return "/addr/addrWrite";
+	}
+		
+	@RequestMapping("/addr/insert.do")
+	public String addrInsert(AddrDto dto) throws Exception {
+		addrService.insertAddr(dto);
+		return "redirect:/addr/list.do";
+	}
+		//	문제 1) 수정 기능을 구현하세요
 	
 //	문제 2) 주소록 등록 UI 및 기능을 구현하세요
 	

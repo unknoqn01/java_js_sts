@@ -16,4 +16,6 @@ public interface AddrMapper {
 	public void deleteAddr(int seq) throws Exception;
 
 	public void updateAddr(AddrDto dto) throws Exception;
+
+	public void insertAddr(AddrDto dto) throws Exception;
 }

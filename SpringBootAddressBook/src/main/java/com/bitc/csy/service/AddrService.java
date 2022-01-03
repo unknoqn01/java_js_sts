@@ -13,4 +13,7 @@ public interface AddrService {
 	void deleteAddr(int seq) throws Exception;
 
 	void updateAddr(AddrDto dto) throws Exception;
+	
+	void insertAddr(AddrDto dto) throws Exception;
+	
 }

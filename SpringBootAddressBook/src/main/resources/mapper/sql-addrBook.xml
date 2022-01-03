@@ -54,6 +54,33 @@
 				seq = #{seq}
 		]]>
 	</update>	
+	
+	<!--등록-->
+		<insert id="insertAddr" parameterType= "com.bitc.csy.dto.AddrDto">
+			<![CDATA[
+				insert into 
+					t_member (
+								user_id, 
+								user_pw, 
+								user_name, 
+								user_email, 
+								user_phone, 
+								user_addr, 
+								user_gender
+								) 
+				values 
+					(
+						#{userId}, 
+						#{userPw},
+						#{userName}, 
+						#{userEmail}, 
+						#{userPhone}, 
+						#{userAddr}, 
+						#{userGender}
+						);
+					
+				]]>
+	</insert>
 </mapper>
 
 
