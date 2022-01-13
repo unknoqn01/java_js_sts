@@ -40,7 +40,7 @@ public interface BoardMapper {
 //	@Param : 매개변수로 받아온 파일에 대한 설명을 표시하는 어노테이션
 //	mapper 에서 @Param으로 지정한 이름을 xml 파일에서 사용할 수 있음
 	BoardFileDto selectBoardFileInfo(@Param("fileIdx") int fileIdx, @Param("boardIdx") int boardIdx) throws Exception;
-	
+
 }
 
 

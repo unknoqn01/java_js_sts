@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<script>
+	$(document).ready(function() {
+		var idx = $("#idx").val();
+		
+		$("#btn-list").on("click", function() {
+			location.href="/restBoard";
+		});
+		
+		$("#btn-edit").on("click", function() {
+// 			id값이 method이고 name 값이 _method인 input 태그의 value 값을 PUT으로 변경
+			$("#method").val("PUT");
+			var frm = $("#frm")[0];
+// 			접속할 URI에 리소스를 추가
+			frm.action = "/restBoard/edit/" + idx;
+			frm.submit(); // 자바스크립트를 이용하여 submit 버튼을 누른 것과 동일한 이벤트를 발생시켜 서버로 요청
+		});
+		
+		$("#btn-delete").on("click", function() {
+// 			id값이 method이고 name 값이 _method인 input 태그의 value 값을 DELETE로 변경
+			$("#method").val("DELETE");
+			var frm = $("#frm")[0];
+			/* frm.action = "/restBoard/delete/" + idx; */
+			frm.action = "/restBoard/" + idx;
+			frm.submit();
+		});
+	});
+</script>
+
+</head>
+<body>
+	<header>
+	</header>
+	
+	<main class="container mt-5">
+		<!-- html은 기본적으로 서버로 요청하는 방식이 get, post만 지원함 -->
+		<!-- form을 통해서 서버로 요청하는 방식을 기본 형태로 post로 사용함 -->
+		<!-- RESTful 방식을 사용하면 GET, POST, PUT, DELETE를 사용하여 각각의 기능을 사용해야 하는데 html은 지원하지 않기 때문에 스프링 프레임워크에서 HiddenHttpMethodFilter를 이용하여 RESTful을 지원하고 있음 -->
+		<!-- input 태그를 이용하여 실제 사용할 method 타입을 변경하여 실행 -->
+		<!-- 스프링프레임워크의 HiddenHttpMethodFilter는 _method 라는 식별자가 존재 시 그 값을 요청 방식으로 사용함 -->
+		<form id="frm" method="post">
+			<div class="row my-3">
+				<div class="col-sm">
+					<input type="text" class="form-control" name="title" value="제목" placeholder="제목을 입력하세요" th:value="${restBoard.title}">
+				</div>
+			</div>
+			<div class="row my-3">
+				<div class="col-sm-4">
+					<input type="text" class="form-control" name="creatorId" readonly value="사용자" th:value="${restBoard.creatorId}">
+				</div>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" name="createdDate" readonly value="2021-12-29" th:value="${restBoard.createdDate}">
+				</div>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" name="hitCnt" readonly value="0" th:value="${restBoard.hitCnt}">
+				</div>
+			</div>
+			<div class="row my-3">
+				<div class="col-sm">
+					<textarea rows="10" class="form-control" name="contents" th:text="${restBoard.contents}"></textarea>
+				</div>
+			</div>
+			<!-- <div class="row my-3">
+				<div class="col-sm">
+					<a th:each="file : ${restBoard.fileList}" th:href="@{/board/downloadBoardFile.do(fileIdx=${file.fileIdx},boardIdx=${file.boardIdx})}" th:text="|${file.originalFileName}(${file.fileSize} kb) |"></a>
+				</div>
+			</div> -->
+			<div>
+				<input type="hidden" id="idx" name="idx" value="1" th:value="${restBoard.idx}">
+				<!-- HiddenHttpMethodFilter를 통해서 method 속성을 변경하기 위한 태그 -->
+				<!-- name의 값이 반드시 _method 이어야 함 -->
+				<!-- 스프링프레임워크에서 식별자의 값이 _method인 태그의 value 값을 확인하여 속성 값에 따라 GET, POST, PUT, DELETE 로 동작함 -->
+				<input type="hidden" id="method" name="_method">
+			</div>
+			<div class="my-3 clearfix">
+				<button type="button" id="btn-list" class="btn btn-secondary float-start">목록</button>
+				<button type="button" id="btn-edit" class="btn btn-success float-end">수정</button>
+				<button type="button" id="btn-delete" class="btn btn-danger float-end me-3">삭제</button>
+			</div>
+		</form>
+	</main>
+	
+	<footer>
+	</footer>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

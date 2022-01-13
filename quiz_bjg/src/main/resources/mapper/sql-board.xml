@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "com.bitc.quizbjg.mapper.BoardMapper">
+<!--로그인 체크-->
+	<select id = "selectMemberInfoYn" parameterType="map" resultType="int">
+		<![CDATA[
+			select 
+				count(*) as cnt
+			from t_member
+			where 
+				user_id = #{userId} 
+			and 
+				user_pw = #{userPw};	
+		]]>
+	</select>
+	
+<!--사용자 등록-->
+<insert id = "insertMember" parameterType="com.bitc.quizbjg.dto.MemberDto">
+	<![CDATA[
+			insert into 
+				t_member
+				(user_id, user_pw, user_name, user_email)
+			values
+				(#{userId}, #{userPw}, #{userName}, #{userEmail});
+		]]>
+</insert>
+
+</mapper>

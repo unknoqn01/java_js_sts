@@ -2,7 +2,6 @@ package com.bitc.board.controller;
 
 import java.io.File;
 import java.net.URLEncoder;
-import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.bitc.board.dto.BoardDto;
 import com.bitc.board.dto.BoardFileDto;
 import com.bitc.board.service.BoardService;
+import com.github.pagehelper.PageInfo;
 
 // 해당 클래스가 MVC모델에서 control 부분을 담당하는 파일이라는 것을 알려주는 어노테이션
 // @Controller : 일반적인 control 부분을 담당하는 어노테이션(클라이언트에 html 파일을 전송)
@@ -27,8 +27,22 @@ public class BoardController {
 	@Autowired
 //	비즈니스 로직을 처리하는 서비스 빈과 연결
 	private BoardService boardService;
+
+
+	@RequestMapping("/board/openBoardList.do")
+	public ModelAndView paging(@RequestParam(required = false, defaultValue= "1") int pageNum) throws Exception {
+		ModelAndView mv = new ModelAndView("/board/boardList");
 	
-//	사용자가 접속할 수 있는 주소를 해당 메서드와 연결하는 어노테이션
+		PageInfo<BoardDto> page = new PageInfo<>(boardService.selectBoardListPaging(pageNum), 5); // 두번째 매개변수는 페이징 수
+		mv.addObject("boardList", page);
+		
+		return mv;
+	}	
+	
+	
+	
+/*
+	//	사용자가 접속할 수 있는 주소를 해당 메서드와 연결하는 어노테이션
 	@RequestMapping("/board/openBoardList.do")
 	public ModelAndView openBoardList() throws Exception {
 //		ModelAndView 클래스 : 데이터와 화면을 동시에 가지고 있는 클래스
@@ -46,7 +60,9 @@ public class BoardController {
 		
 //		클라이언트에 ModelAndView 클래스 타입의 객체를 전송
 		return mv;
-	}
+	}	
+*/
+	
 	
 //	클라이언트 요청 주소와 메서드를 연동
 //	웹브라우저의 주소창에 서버주소:포트번호/board/writeBoard.do 를 입력하면 연결된 writeBoard() 메서드가 실행됨

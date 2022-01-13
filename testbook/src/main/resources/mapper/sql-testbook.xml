@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Mybatis에서 매핑된 sql 이라는 것을 알려주기 위한 문장 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bitc.jkb.mapper.TestbookMapper">
+
+	<insert id="insert" parameterType="com.bitc.jkb.dto.TestbookDto">
+		<![CDATA[
+			insert into 
+				testbook(
+						id, 
+						pw, 
+						name, 
+						phone, 
+						email, 
+						harbit, 
+						addr, 	
+						gender)
+			values (
+					#{id}, 
+					#{pw}, 
+					#{name}, 
+					#{phone}, 	
+					#{email}, 
+					#{harbit}, 
+					#{addr}, 
+					#{gender}
+					);
+			]]>	
+	</insert>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

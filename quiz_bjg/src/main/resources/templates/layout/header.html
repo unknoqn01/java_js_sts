@@ -1,0 +1,28 @@
+<header>
+  <nav class="navbar navbar-expand-sm navbar-fixed-top navbar-dark bg-dark px-3">
+    <ul class="navbar-nav me-auto">
+      <li class="nav-item">
+        <a href="#" class="nav-link active">메뉴1</a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link active">메뉴2</a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link active">메뉴3</a>
+      </li>
+    </ul>
+    <div th:if="${session.userId == null}">
+      <a href="/login/login" class="btn btn-outline-primary">로그인</a>
+    </div>
+    <div th:if="${session.userId != null}">
+      <a
+        href="#"
+        class="btn btn-outline-primary"
+        th:text="${session.userId}+'님'"
+        >로그인</a
+      >
+      <a href="/login/logout" class="btn btn-outline-primary">로그 아웃</a>
+    </div>
+  </nav>
+
+</header>
