@@ -47,21 +47,15 @@ public class LoginController {
 			HttpSession session = request.getSession();
 
 			session.setAttribute("userId", member.getUserId());
-
+			
 			return "redirect:/board/boardList";
+		
 		}
 		else {
 			return "redirect:/login/loginFail";
 		}
 	}
 
-	// 로그인 성공
-	@RequestMapping(value="/login/loginOK", method=RequestMethod.GET)
-	public String loginOK(HttpServletRequest request) throws Exception {
-
-		return "/board/boardList";
-	}
-	
 	@RequestMapping(value="/login/logout", method=RequestMethod.GET)
 	public String logout(HttpServletRequest request) throws Exception {
 		HttpSession session = request.getSession();

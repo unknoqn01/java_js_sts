@@ -13,10 +13,10 @@
 <script>
    $(document).ready(function() {
       $("#btn-cal").on("click", function() {
-         var valNum1 = $("#num1").val();
-         var valNum2 = $("#num2").val();
-         var datas = {num1: valNum1, num2: valNum2};
-         
+          var valNum1 = $("#num1").val();
+          var valNum2 = $("#num2").val();
+          var datas = {num1: valNum1, num2: valNum2};
+  
          $.ajax({
             url: "/ajax/calResult.do", // 요청할 서버 URL
             type: "post", // 데이터 전송 방식(form 태그의 method 속성과 같음)

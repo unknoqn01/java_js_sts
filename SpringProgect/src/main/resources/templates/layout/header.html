@@ -1,0 +1,22 @@
+<header>
+  <nav
+    class="navbar navbar-expand-sm navbar-fixed-top navbar-dark bg-dark px-3"
+  >
+    <ul class="navbar-nav me-auto">
+      <li class="nav-item">
+        <a href="#" class="nav-link active">메뉴1</a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link active">메뉴2</a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link active">메뉴3</a>
+      </li>
+    </ul>
+    <div th:if="${session.userId == null}">
+      <button type="button" id="democlicknav" class="btn btn-outline-warning">
+        <i class="bi bi-border-width"></i>
+      </button>
+    </div>
+  </nav>
+</header>

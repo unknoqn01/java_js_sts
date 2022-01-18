@@ -7,7 +7,8 @@
 		<![CDATA[
 			select 
 				count(*) as cnt
-			from t_member
+			from 
+				t_member
 			where 
 				user_id = #{userId} 
 			and 
@@ -25,5 +26,62 @@
 				(#{userId}, #{userPw}, #{userName}, #{userEmail});
 		]]>
 </insert>
+
+<select id = "selectBoardList" resultType="com.bitc.quizbjg.dto.BoardDto">
+	<![CDATA[
+		select 
+			idx, 
+			title, 
+			creator_id, 
+			created_dt 
+		from 
+			t_board
+		where 
+			deleted_yn = 'N';
+	]]>
+</select>
+
+<!--게시글 상세 보기-->
+<select id = "boardDetail" parameterType="int" resultType="com.bitc.quizbjg.dto.BoardDto">
+	<![CDATA[
+		select 
+			idx,
+			title, 
+			contents, 
+			creator_id, 
+			created_dt, 
+			updator_id, 
+			updated_dt 
+		from 
+			t_board
+		where 
+			idx = #{idx}
+	]]>
+</select>
+
+<!--게시글 수정-->
+<update id = "updateBoard" parameterType="com.bitc.quizbjg.dto.BoardDto">
+	<![CDATA[
+		update 
+			t_board 
+		set 
+			title = #{title}, 
+			contents = #{contents}, 
+			updator_id = #{updatorId}, updated_dt = now()
+		where 
+			idx = #{idx};   
+	]]>
+</update>
+
+<delete id = "deleteBoard" parameterType="int">
+	<![CDATA[
+		update 
+			t_board 
+		set 
+			deleted_yn = 'Y'
+		where 
+			idx = #{idx};
+	]]>
+</delete>
 
 </mapper>

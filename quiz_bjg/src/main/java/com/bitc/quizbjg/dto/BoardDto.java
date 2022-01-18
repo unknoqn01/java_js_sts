@@ -8,7 +8,7 @@ public class BoardDto {
 	private int idx; 
 	private String title;
 	private String contents; 
-	private String ceatorId; 
+	private String creatorId; 
 	private String createdDt; 
 	private String updatorId; 
 	private String updatedDt; 

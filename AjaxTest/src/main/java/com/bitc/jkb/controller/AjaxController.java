@@ -44,7 +44,7 @@ public class AjaxController {
 	@ResponseBody
 //	value : RequestMapping 어노테이션에 여러개의 옵션을 사용할 경우 구분하기 위한 속성명, 클라이언트에서 요청하기 위한 URL을 입력하는 속성, RequestMapping에 단 하나의 속성만 사용시 valye가 기본이며, 삭제 가능함
 //	method : RequestMapping 어노테이션의 옵션 중 하나로 클라이언트와 통신 시 사용하는 데이터 전송 방식을 구분하기 위한 것, 미입력 시 자동 판단  
-	@RequestMapping(value="ajax/calResult.do", method=RequestMethod.POST)
+	@RequestMapping(value="/ajax/calResult.do", method=RequestMethod.POST)
 	public Object ajaxCalResult(CalDto cal) throws Exception {
 //		HashMap은 키와 값이 1:1로 매칭되어 있는 데이터 타입
 //		하나의 변수명으로 여러개의 데이터를 저장할 수 있는 데이터 타입
@@ -100,5 +100,4 @@ public class AjaxController {
 		return map;
 	}	
 	
- 	
 }
