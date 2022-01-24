@@ -26,10 +26,10 @@
           $("#democlick").trigger("click");
         })
 		
-		// 취소
-        $("#btn-cancel").on("click", function () {
-            history.back();
-          });
+		// 목록
+        $("#btn-list").on("click", function () {
+			location.href="/board/boardList";
+        });
 		
 		// 메세지 팝업  
 		$("#popup-click").on("click", function() {
@@ -49,16 +49,16 @@
 		<div class="row">    	
 			<div class="col-10">	
 			    <div class="p-1 bg-secondary bg-opacity-25 rounded">
-	        		<h3 class="text-center">게시판 글쓰기</h3>
+	        		<h3 class="text-center">메세지 보내기</h3>
 	      		</div>
 		    	<div class="my-3">
-		        <form action="/board/boardWrite" method="post">
+		        <form action="/login/sendMsg" method="post">
 		            <div>
 		              <input
 		                type="text"
-		                id="title"
-		                name="title"
-						placeholder="제목을 입력해주세요"
+		                id="recive-id"
+		                name="reciveId"
+						placeholder="보낼 아아디를 입력해주세요"
 		              	class="text-start form-control"
 		              />
 		            </div>
@@ -67,26 +67,26 @@
 		              <textarea
 		                rows="10"
 		                class="form-control"
-		                id="contents"
-		                name="contents"
+		                id="msg"
+		                name="msg"
 		              	placeholder="내용을 입력해주세요"
 		              ></textarea>
 		            </div>
-		          		<input type="hidden" id="user-id" name="userId" th:value="${session.userId}">
+		          		<input type="hidden" id="send-id" name="sendId" th:value="${session.userId}">
 		          </div>
 		          <div class="my-3 clearfix">
 		            <button
 		              type="button"
-		              id="btn-cancel"
+		              id="btn-list"
 		              class="btn btn-secondary float-start"
 		            >
-		              취소
+		              목록
 		            </button>
 		           	<button
 		              type="submit"
 		              class="btn btn-danger float-end me-3"
 		            >
-		              확인
+		              보내기
 		            </button>
 		          </div>
 		        </form>

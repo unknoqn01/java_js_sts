@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Insert title here</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous">
+      	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
+    
+    <script>
+      $(document).ready(function() {
+		// 네비게이션 collapse    	  
+        $("#democlicknav").on("click", function() {
+          $("#democlick").trigger("click");
+        })
+
+        $('#myModal').modal('show'); 
+		
+		// 취소
+        $("#btn-cancel").on("click", function () {
+            history.back();
+          });
+		
+		$("#btn-findpw").on("click", function () {
+	        var datas = {userId: $("#user-id").val(), userPhone: $("#user-phone").val()};
+			
+			$.ajax ({
+				url : "/login/findPw",
+				type : "post",
+				data : datas,
+				
+				success : function(data) {
+
+					if(data.count == 1) {
+		            	$("#temp-pw").removeClass("d-none");
+		            	$("#btn-cancel").addClass("d-none");
+		            	$("#btn-findpw").addClass("d-none");
+		            	$("#user-pw").val(data.tempPw);
+					}
+					else {
+						location.href="/board/boardList";
+					}
+				},
+				
+				error : function() {
+					alert("통신 실패");
+				},
+				
+			}) 
+			
+		})
+		
+		$("#btn-test").on("click", function() {
+			$.ajax({
+				url: "/login/testtest",
+				type: "get",
+				success: function(data) {
+					alert(data);
+				},
+				error: function() {
+					alert("aaaa");
+				}
+			});
+		});
+		
+     })
+    </script>
+
+  </head>
+  <body>
+    <header th:include="layout/header :: header"></header>
+	<main class="container mt-3">
+		<div class="row">    	
+			<div class="col-10">	
+			    <div class="p-1 bg-secondary bg-opacity-25 rounded">
+	        		<h3 class="text-center">비밀번호 찾기</h3>
+	      		</div>
+		    	<div class="my-1">
+		        <div>
+		          <div class="my-3">
+			          	<label for="user-id">ID : </label>
+			    	    <input type="text" id = "user-id" name="userId" placeholder="찾으실 id를 입력해주세요" class="form-control">
+		          </div>
+		          <div class="my-3">
+			          	<label for="user-phone">Phone : </label>
+			    	    <input type="text" id = "user-phone" name="userPhone" placeholder="폰 번호를 입력해주세요" class="form-control">
+		          </div>
+		          <div class="my-3 clearfix">
+		            <button
+		              type="button"
+		              id="btn-cancel"
+		              class="btn btn-secondary float-start"
+		            >
+		              취소
+		            </button>
+		            <button
+		              type="button"
+		              id="btn-findpw"
+		              class="btn btn-primary float-end"
+		            >
+		              찾기
+		            </button>
+      				<div id="temp-pw" class="my-4 d-none" >
+		            	<hr>
+		            	<p>임시비밀 번호 : </p>
+		            	<input type="text" id = "user-pw" readonly  placeholder="임시비밀번호" class="form-control form-control-plaintext">
+		           		<p class="mt-3">로그인 후 비밀번호를 변경해주세요</p>
+		            	<div class="row">
+		            		<a href = "/board/boardList" class="btn btn-primary mt-3 col-4 mx-auto">메인 페이지로 이동</a>
+		            	</div>
+		            </div>
+		          </div>
+		        </div>
+		      </div>
+			</div>
+			
+			<!-- 사이드 바 -->
+			<div class="col-2">
+				<sidebar th:include="/layout/sidebar :: sidebar"></sidebar>
+			</div>
+			<!-- 사이드 바 -->
+		</div>  
+	</main>
+
+    <footer th:include="layout/footer :: footer"></footer>
+</html>

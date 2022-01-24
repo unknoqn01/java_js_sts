@@ -2,6 +2,155 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.bitc.mapper.BoardMapper">
+
+	<!-- 회원 가입-->
+	<insert id="signUp" parameterType="com.bitc.dto.MemberDto">
+		<![CDATA[ 
+			insert into 
+				member
+					(user_id, user_pw, user_phone, user_email, created_date)
+			values
+				(#{userId}, #{userPw}, #{userPhone}, #{userEmail}, now());
+
+		]]>
+	</insert>
+	
+	<!-- 아이디 중복 확인-->
+	<select id="idCheck" parameterType="String" resultType="int" >
+		<![CDATA[ 
+			select 
+				count(*) 
+			from 
+				member
+			where 
+				user_id = #{userId}
+		]]>
+	</select>
+		
+	
+	<!-- 메세지 보관함 생성-->
+	<insert id="createMsgStrogae" parameterType="String">
+		<![CDATA[ 
+			CREATE TABLE ${userId} 
+				(
+				 `seq` INT NOT NULL AUTO_INCREMENT,
+				 `send_id` VARCHAR(45) NOT NULL,
+				 `recive_id` VARCHAR(45) NOT NULL,
+  				 `msg` VARCHAR(45) NOT NULL,
+  				 `created_date` DATETIME NULL,
+  			PRIMARY KEY (`seq`))
+			ENGINE = InnoDB
+			DEFAULT CHARACTER SET = utf8;
+		]]>
+	</insert >
+	
+	<!-- 임시 비밀번호 생성-->
+	<select id="findpw" parameterType="com.bitc.dto.MemberDto" resultType="int" >
+		<![CDATA[ 
+			select 
+				count(*) 
+			from 
+				member
+			where 
+				user_id = #{userId}
+			and 
+				user_phone =#{userPhone};
+			
+		]]>
+	</select>
+	
+	<!-- 임시 비밀번호 변경-->
+	<update id="updateTempPw" parameterType="String">
+		<![CDATA[ 
+			update 
+				member 
+			set 
+				user_pw = #{userPw} 
+			where 
+				user_id = #{userId}
+		]]>	
+	</update>
+	
+	<!-- 게시글 삭제 탈퇴-->
+	<delete id="deleteBoardUser" parameterType="String">
+		<![CDATA[ 
+			delete from board
+			where 
+				user_id = #{userId};
+		]]>
+	</delete>
+	
+	<!-- 로그인 체크-->
+	<select id="selectMemberInfo" parameterType="String" resultType="int" >
+		<![CDATA[ 
+			select 
+				count(*) 
+			from 
+				member
+			where 
+				user_id = #{userId}
+			and 
+				user_pw =#{userPw};
+		]]>
+	</select>
+	
+	<!-- 내 정보-->
+	<select id="selectMemberInfoMy" parameterType="String" resultType="com.bitc.dto.MemberDto">
+		<![CDATA[ 
+				select *
+			from 
+				member
+			where 
+				user_id = #{userId};
+		]]>
+	</select>
+	
+	<!-- 내 정보 수정-->
+	<update id="updateMy" parameterType="com.bitc.dto.MemberDto">
+		<![CDATA[ 
+			update 
+				member 
+			set 
+				user_id = #{userId},
+				user_pw = #{userPw}, 
+				user_phone = #{userPhone}, 
+				user_email = #{userEmail}
+			where 
+				seq = #{seq};
+		]]>
+	</update>
+	
+	<!-- 회원 탈퇴-->
+	<delete id="deleteMember" parameterType="int">
+		<![CDATA[ 
+			delete from member 
+			where 
+				seq = #{seq};	
+		]]>
+	</delete>
+	
+	<!--  메세지 보기-->
+	<select id="selectMsg" parameterType="String" resultType="com.bitc.dto.MsgDto">
+		<![CDATA[ 
+			select 
+				seq, 
+				send_id, 
+				msg, 
+				created_date 
+			from ${userId}
+		]]>
+	</select>
+	
+	<!-- 메세지 보내기-->
+	<insert id="sendMsg" parameterType="com.bitc.dto.MsgDto">
+		<![CDATA[ 
+			insert into ${reciveId}
+				(send_id, recive_id, msg, created_date)
+			values
+				(#{sendId}, #{reciveId}, #{msg}, now());
+		]]>
+	</insert>
+
 	<!-- 게시판 조회-->
 	<select id = "selectBoardList" resultType="com.bitc.dto.BoardDto"> 
 		<![CDATA[
@@ -18,13 +167,14 @@
 		]]>
 	</select>
 	
-	<!-- 게시판 검색-->
+	<!-- 게시판 검색 아이디-->
 	<select id = "searchBoardList" parameterType="String" resultType="com.bitc.dto.BoardDto">
 		<![CDATA[
 			select 
 				idx, 
 				user_id, 
 				title, 
+				contents,
 				created_date
 			from 
 				board
@@ -33,7 +183,38 @@
 			and 
 				user_id = #{userId}
 		]]>	
-	</select  >
+	</select>
+	
+	<!-- 게시판 검색 내용-->
+	<select id="searchBoardListContents" parameterType="String" resultType="com.bitc.dto.BoardDto">
+		<![CDATA[
+			select 
+				idx, 
+				user_id, 
+				title, 
+				contents,
+				created_date
+			from 
+				board
+			where 
+				deleted_yn = 'N'
+			and 
+				contents = #{contents}
+		]]>	
+	</select>
+	
+	<!-- 게시판 글 쓰기-->
+	<insert id="insertBoard" parameterType="com.bitc.dto.BoardDto">
+		<![CDATA[ 
+			insert into 
+				board
+					(user_id, title, contents, created_date)
+			values
+				(#{userId}, #{title}, #{contents}, now())
+
+		]]>
+	</insert>
+	
 	<!-- 게시판 상세 보기-->
 	<select id="boardDetail" parameterType="int" resultType="com.bitc.dto.BoardDto">
 		<![CDATA[ 
@@ -48,6 +229,31 @@
 			where 
 				idx = #{idx};
 		]]>
-	</select>	
+	</select>
+	
+	<!-- 게시판 상세 수정-->
+	<update id="updateBoard" parameterType="com.bitc.dto.BoardDto">
+		<![CDATA[ 
+			update 
+				board 
+			set 
+				title = #{title}, 
+				contents = #{contents}
+			where 
+				idx = #{idx}
+		]]>
+	</update>	
+	
+	<!-- 게시판 상세 삭제-->
+	<update id="deleteBoard" parameterType = "int">
+		<![CDATA[ 
+			update 
+				board 
+			set 
+				deleted_yn = 'Y'
+			where 
+				idx = #{idx};
+		]]>
+	</update>
 </mapper>
 

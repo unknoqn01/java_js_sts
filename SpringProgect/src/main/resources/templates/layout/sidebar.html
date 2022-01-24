@@ -1,0 +1,22 @@
+<sidebar class="col-2">
+<button type="button" id = "democlick" data-bs-toggle="collapse" data-bs-target="#demo" hidden>collapse</button>
+  <div id = "demo" class="collapse">
+	    <div th:if ="${session.userId == null}"s>
+	      <form action="/login/login" method="method">
+	        <input type="text" name = "userId" placeholder="id" class="form-control">
+	        <input type="password" name = "userPw" placeholder="pw" class="form-control">
+	        <button type="submit" class="btn btn-primary mt-1">로그인</button>
+	      </form>
+	      <div>
+	        <a href="/login/findPw" class="btn btn-secondary mt-1">비밀번호 찾기</a>
+	        <a href="/login/signUp" class="btn btn-secondary mt-1">회원 가입</a>
+	      </div>
+	    </div> 
+    <div th:if ="${session.userId != null}">        
+      <p th:text="${session.userId}+'님'">유저명</p>
+    <a href="/login/myPage" class="btn btn-outline-primary my-1">내 정보</a>
+    <a href="/login/logout" class="btn btn-outline-primary">로그 아웃</a>
+	<button type="button" id="popup-click" class="btn btn-outline-warning my-1">메세지 팝업</button>
+    <a href="/login/sendMsg" class="btn btn-outline-danger my-1 text-decoration-none">메세지 보내기</a>
+  </div>
+</sidebar>
